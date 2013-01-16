@@ -3,7 +3,7 @@ use warnings;
 use Plack::Builder;
 
 my $app = sub {
-    my $x = 0 / 2; ### XXX error!
+    my $x = 2 / 0; ### XXX error!
     [ '200', [], [$x] ];
 };
 

@@ -6,26 +6,21 @@ our $VERSION = '0.01';
 
 use Git::Class;
 use Cwd;
+use Carp;
 
-our $SHOW_EMAIL = 0;
+our $PARSE_BLAME = 0;
 our $TREE;
 
 sub _blame {
     my ($filename, $line) = @_;
-    my ($result) = $SHOW_EMAIL ? 
-        $TREE->git('blame', $filename, '-L', $line, '--show-email') :
-        $TREE->git('blame', $filename, '-L', $line)
-    ;
-    return $result
+    my ($result) = eval { $TREE->git('blame', $filename, '-L', $line) };
+    return $result unless $@;
 }
 
 sub _parse_blame {
     my $blame = shift;
     my %res = ();
-    @res{'hash','committer','datetime','line','source'} = $SHOW_EMAIL ? 
-        $blame =~ /^([0-9A-Fa-f]+?) \(\<(.+?)\> ([0-9]{4}\-[0-9]{2}\-[0-9]{2} [0-9]{2}\:[0-9]{2}\:[0-9]{2} [\-\+][0-9]{4}) +([0-9]+)\)(.+)$/ :
-        $blame =~ /^([0-9A-Fa-f]+?) \((.+?) ([0-9]{4}\-[0-9]{2}\-[0-9]{2} [0-9]{2}\:[0-9]{2}\:[0-9]{2} [\-\+][0-9]{4}) +([0-9]+)\)(.+)$/ 
-    ;
+    @res{'hash','committer','datetime','line','source'} = $blame =~ /^([0-9A-Fa-f]+?) \((.+?) ([0-9]{4}\-[0-9]{2}\-[0-9]{2} [0-9]{2}\:[0-9]{2}\:[0-9]{2} [\-\+][0-9]{4}) +([0-9]+)\)(.+)$/;
     return \%res;
 }
 
@@ -39,20 +34,31 @@ sub _parse_error {
 sub prepare_app {
     my $self = shift;
     $TREE = Git::Class::Worktree->new(path => getcwd);
-    $SHOW_EMAIL = $self->{show_email} ? 1 : 0;
+    $PARSE_BLAME = $self->{parse_blame} ? 1 : 0;
 }
 
 sub call {
     my ($self, $env) = @_;
     my $res = eval{ $self->app->($env) };
     if ( $@ ) {
-        my $error = _parse_error($@);
+        my $errstr = $@;
+        my $error = _parse_error($errstr);
         my $blame = _blame($error->{file}, $error->{line});
-        my $commit = _parse_blame($blame);
-        die sprintf(
-            "%s\nCommit: %s\nCommitter: %s\nCommited at: %s\nFile: %s\nLine: %s\n", 
-            $error->{message}, $commit->{hash}, $commit->{committer}, $commit->{datetime}, $error->{file}, $error->{line}
-        );
+        if ( $blame ) {
+            if ( $PARSE_BLAME ) {
+                my $commit = _parse_blame($blame);
+                die sprintf(
+                    "%s\nCommit: %s\nCommitter: %s\nCommited at: %s\nFile: %s\nLine: %s\n", 
+                    $error->{message}, $commit->{hash}, $commit->{committer}, $commit->{datetime}, $error->{file}, $error->{line}
+                );
+            }
+            else {
+                die sprintf('%s [git-blame] %s', $error->{message}, $blame);
+            }
+        }
+        else {
+            die "$errstr (not git repository)";
+        }
     }
     return $res;
 };
@@ -77,7 +83,7 @@ in your psgi file,
   };
   
   builder {
-      enable 'ErrorWithGitBlame', show_email => 1;
+      enable 'ErrorWithGitBlame', parse_blame => 1;
       $app;
   };
 

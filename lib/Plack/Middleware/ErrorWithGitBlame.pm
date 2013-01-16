@@ -79,7 +79,7 @@ in your psgi file,
   ### your app
   my $app = sub { 
       my $x = 2 / 0 # error!
-      [200, [], ['']]; 
+      [200, [], ['x is '.$x]]; 
   };
   
   builder {

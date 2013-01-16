@@ -1,0 +1,27 @@
+This is Perl module Plack::Middleware::ErrorWithGitBlame.
+
+INSTALLATION
+
+Plack::Middleware::ErrorWithGitBlame installation is straightforward. If your CPAN shell is set up,
+you should just be able to do
+
+    % cpan Plack::Middleware::ErrorWithGitBlame
+
+Download it, unpack it, then build it as per the usual:
+
+    % perl Makefile.PL
+    % make && make test
+
+Then install it:
+
+    % make install
+
+DOCUMENTATION
+
+Plack::Middleware::ErrorWithGitBlame documentation is available as in POD. So you can do:
+
+    % perldoc Plack::Middleware::ErrorWithGitBlame
+
+to read the documentation online with your favorite pager.
+
+ytnobody

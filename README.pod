@@ -19,6 +19,36 @@ in your psgi file,
       $app;
   };
 
+and plackup it. Then, an error as following will raise when app gets request.
+
+  Illegal division by zero
+  Commit: 49f9ddfc
+  Committer: ytnobody
+  Commited at: 2013-01-16 19:20:49 +0900
+  File: app_parse.psgi
+  Line: 5
+   at /home/ytnobody/work/Plack-Middleware-ErrorWithGitBlame/blib/lib/Plack/Middleware/ErrorWithGitBlame.pm line 50
+  	Plack::Middleware::ErrorWithGitBlame::call('Plack::Middleware::ErrorWithGitBlame=HASH(0x19288d18)', 'HASH(0x19254158)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Component.pm line 39
+  	Plack::Component::__ANON__('HASH(0x19254158)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Middleware/Lint.pm line 24
+  	Plack::Middleware::Lint::call('Plack::Middleware::Lint=HASH(0x18e0e320)', 'HASH(0x19254158)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Component.pm line 39
+  	Plack::Middleware::StackTrace::__ANON__ at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Try/Tiny.pm line 71
+  	eval {...} at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Try/Tiny.pm line 67
+  	Plack::Middleware::StackTrace::call('Plack::Middleware::StackTrace=HASH(0x18e0e860)', 'HASH(0x19254158)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Component.pm line 39
+  	Plack::Component::__ANON__('HASH(0x19254158)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Middleware/AccessLog.pm line 28
+  	Plack::Middleware::AccessLog::call('Plack::Middleware::AccessLog=HASH(0x18e0e620)', 'HASH(0x19254158)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Component.pm line 39
+  	Plack::Component::__ANON__('HASH(0x19254158)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Middleware/ContentLength.pm line 10
+  	Plack::Middleware::ContentLength::call('Plack::Middleware::ContentLength=HASH(0x1924ff90)', 'HASH(0x19254158)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Component.pm line 39
+  	Plack::Component::__ANON__('HASH(0x19254158)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Util.pm line 142
+  	eval {...} at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Util.pm line 142
+  	Plack::Util::run_app('CODE(0x19289018)', 'HASH(0x19254158)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/HTTP/Server/PSGI.pm line 169
+  	HTTP::Server::PSGI::handle_connection('HTTP::Server::PSGI=HASH(0x19288f10)', 'HASH(0x19254158)', 'IO::Socket::INET=GLOB(0x19289558)', 'CODE(0x19289018)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/HTTP/Server/PSGI.pm line 128
+  	HTTP::Server::PSGI::accept_loop('HTTP::Server::PSGI=HASH(0x19288f10)', 'CODE(0x18e0e4e8)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/HTTP/Server/PSGI.pm line 55
+  	HTTP::Server::PSGI::run('HTTP::Server::PSGI=HASH(0x19288f10)', 'CODE(0x18e0e4e8)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Handler/HTTP/Server/PSGI.pm line 14
+  	Plack::Handler::HTTP::Server::PSGI::run('Plack::Handler::Standalone=HASH(0x18d66148)', 'CODE(0x18e0e4e8)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Loader.pm line 84
+  	Plack::Loader::run('Plack::Loader=HASH(0x18c78470)', 'Plack::Handler::Standalone=HASH(0x18d66148)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Runner.pm line 267
+  	Plack::Runner::run('Plack::Runner=HASH(0x18a8ba60)') called at /home/ytnobody/perl5/perlbrew/perls/current/bin/plackup line 10
+
+
 =head1 AUTHOR
 
 ytnobody E<lt>ytnobody@gmail.comE<gt>

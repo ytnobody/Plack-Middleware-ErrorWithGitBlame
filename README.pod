@@ -48,6 +48,13 @@ and plackup it. Then, an error as following will raise when app gets request.
   	Plack::Loader::run('Plack::Loader=HASH(0x18c78470)', 'Plack::Handler::Standalone=HASH(0x18d66148)') called at /home/ytnobody/perl5/perlbrew/perls/perl-5.12.3/lib/site_perl/5.12.3/Plack/Runner.pm line 267
   	Plack::Runner::run('Plack::Runner=HASH(0x18a8ba60)') called at /home/ytnobody/perl5/perlbrew/perls/current/bin/plackup line 10
 
+=head1 OPTIONS
+
+=head2 parse_blame
+
+Specify 0 or 1 (default = 0). 
+
+If you specify it 1, it parse git-blame result, and output as error message.
 
 =head1 AUTHOR
 

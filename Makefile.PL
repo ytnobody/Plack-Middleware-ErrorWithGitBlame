@@ -2,6 +2,7 @@ use inc::Module::Install;
 name 'Plack-Middleware-ErrorWithGitBlame';
 all_from 'lib/Plack/Middleware/ErrorWithGitBlame.pm';
 
+requires 'Plack';
 requires 'Git::Class';
 
 tests 't/*.t';

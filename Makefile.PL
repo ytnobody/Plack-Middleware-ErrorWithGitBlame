@@ -12,6 +12,7 @@ test_requires 'Test::More';
 test_requires 'Test::TCP';
 test_requires 'Path::Class';
 test_requires 'Guard';
+test_requires 'Furl';
 auto_set_repository;
 auto_include;
 WriteAll;

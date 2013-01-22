@@ -14,7 +14,7 @@ like $res->content, qr/Illegal division by zero/;
 like $res->content, qr/Commit: 55c19289/;
 like $res->content, qr/Committer: ytnobody/;
 like $res->content, qr/Commited at: 2013-01-22 14:48:48 \+0900/;
-like $res->content, qr/File: app_parse.psgi/;
+like $res->content, qr/File: .*app_parse\.psgi/;
 like $res->content, qr/Line: 6/;
 
 done_testing;

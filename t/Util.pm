@@ -10,6 +10,8 @@ use File::Copy::Recursive 'dircopy';
 use Exporter 'import';
 
 our @EXPORT = qw/ test_psgi_file /;
+our $WORKSPACE = 't/workspace';
+mkdir $WORKSPACE unless -d $WORKSPACE;
 
 ### Reason for not using Plack::Test
 ###  This test has to check that testee exists in git-repository.
@@ -32,7 +34,7 @@ sub test_psgi_file {
 
 sub copy_temporary {
     my $dir = shift;
-    my $tmpdir = tempdir( dir => 't/workspace', CLEANUP => 1 );
+    my $tmpdir = tempdir( DIR => $WORKSPACE, CLEANUP => 1 );
     dircopy( $dir, $tmpdir );
     return $tmpdir;
 }

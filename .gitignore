@@ -8,4 +8,4 @@ Makefile.old
 nytprof.out
 MANIFEST.bak
 *.sw[po]
-t/workspace/*
+t/workspace

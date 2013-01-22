@@ -11,9 +11,9 @@ my $res = $client->get( $url );
 
 is $res->code, '500';
 like $res->content, qr/Illegal division by zero/;
-like $res->content, qr/f7507b91/;
+like $res->content, qr/55c19289/;
 like $res->content, qr/ytnobody/;
-like $res->content, qr/2013-01-16 18:32:55 \+0900/;
+like $res->content, qr/2013-01-22 14:48:48 \+0900/;
 like $res->content, qr/ 6\) /;
 
 done_testing;

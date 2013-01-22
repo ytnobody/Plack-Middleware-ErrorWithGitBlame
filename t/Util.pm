@@ -11,6 +11,9 @@ use Exporter 'import';
 
 our @EXPORT = qw/ test_psgi_file /;
 
+### Reason for not using Plack::Test
+###  This test has to check that testee exists in git-repository.
+
 sub test_psgi_file {
     my $file = file( shift );
     my $dir = $file->dir;

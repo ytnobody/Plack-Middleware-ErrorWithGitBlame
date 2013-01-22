@@ -18,6 +18,11 @@ sub test_psgi_file {
     my $pwd = getcwd;
     my $guard = guard { chdir $pwd };
     chdir $dir->stringify;
+
+    warn 'DIR: '. $dir->stringify;
+    warn 'FILE: '. $file->basename;
+    warn join "\n", ( `ls -l` );
+
     my $server = Test::TCP->new(
         code => sub {
             my $port = shift;

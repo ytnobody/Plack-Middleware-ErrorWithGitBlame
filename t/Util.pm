@@ -29,7 +29,7 @@ sub test_psgi_file {
 
 sub copy_temporary {
     my $dir = shift;
-    my $tmpdir = tempdir( CLEANUP => 1 );
+    my $tmpdir = tempdir( dir => 't/workspace', CLEANUP => 1 );
     dircopy( $dir, $tmpdir );
     return $tmpdir;
 }
